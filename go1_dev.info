@@ -1,3 +1,5 @@
 name = go1_dev
 description = GO1 - Support for Developer
 core = 7.x
+
+dependencies[] = at_base
