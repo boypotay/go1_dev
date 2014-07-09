@@ -1,5 +1,6 @@
-name = go1_dev
+name = GO1 Development
 description = GO1 - Support for Developer
+package = GO1
 core = 7.x
 
 dependencies[] = at_base
