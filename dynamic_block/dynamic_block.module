@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Dynamic Block feature.
+ */
+
+include_once 'dynamic_block.features.inc';
