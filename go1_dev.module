@@ -24,3 +24,102 @@ function go1_dev_trim_words($string, $words){
   }
   return implode(' ', $string);
 }
+
+
+/**
+* Implementation hook_menu
+*/
+function go1_dev_menu() {
+  $items['admin/update-nodes'] = array(
+    'title' => 'Update node with batch',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('go1_dev_updatenode_form'),
+    'access callback' => 'user_access',
+    'description' => 'Update nodes with batch',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+
+/**
+* Implementation hook_menu
+*/
+function go1_dev_updatenode_form($form, &$form_state) {
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit'),
+  );
+
+  return $form;
+}
+
+/**
+* Implementation hook_validate
+*/
+function go1_dev_updatenode_form_validate($form, &$form_state) {
+}
+
+/**
+* Implementation hook_submit
+*/
+function go1_dev_updatenode_form_submit($form, &$form_state) {
+  global $user;
+  $account = user_load($user->uid);
+  $batch = array(
+    'title' => t('Updating'),
+    'operations' => array(
+      array('go1_dev_updatenode', array($account->uid, 'news')),
+      //array('my_function_2', array()),
+    ),
+    'finished' => 'go1_dev_finished_callback',
+    //'file' => 'path_to_file_containing_myfunctions',
+  );
+  batch_set($batch);
+  // Only needed if not inside a form _submit handler.
+  // Setting redirect in batch_process. batch_process('node/1');
+  batch_process();
+}
+
+/**
+* Processing node update
+*/
+function go1_dev_updatenode($uid, $type, &$context) {
+  // More info on https://www.drupal.org/node/180528
+  $load_type = node_type_load($type);
+  if($load_type) {
+    $limit = 100;
+    $result = db_select('node')
+      ->fields('node', array('nid'))
+      ->condition('type', $type, '=')
+      ->orderBy('nid')
+      ->range(0, $limit)
+      ->execute();
+    foreach ($result as $row) {
+      $node = node_load($row->nid, NULL, TRUE);
+      $context['results'][] = $node->nid . ' : ' . check_plain($node->title);
+      $context['message'] = check_plain($node->title);
+    }
+  }
+}
+
+/**
+* Finished Callback for batch process
+*/
+function go1_dev_finished_callback($success, $results, $operations) {
+  // The 'success' parameter means no fatal PHP errors were detected. All
+  // other error management should be handled using 'results'.
+  if ($success) {
+    $message = format_plural(count($results), 'One node processed.', '@count nodes processed.');
+  }
+  else {
+    $message = t('Finished with an error.');
+  }
+  drupal_set_message($message);
+  // Providing data for the redirected page is done through $_SESSION.
+  foreach ($results as $result) {
+    $items[] = t('Updated node %title.', array('%title' => $result));
+  }
+  $_SESSION['go1_dev_batch_results'] = $items;
+}
+

@@ -4,12 +4,13 @@ Maintainers:
 -------
   Nguyen Tran (https://www.drupal.org/user/1548780)
   Requires - Drupal 7
-  License - GPL (see LICENSE)
+  License - GPL
 
 
 Overview:
 --------
 GO1 Dev help to developer to work easier and save time
+Update batch process update node
 
 
 Installation:

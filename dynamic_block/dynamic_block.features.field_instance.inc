@@ -10,6 +10,42 @@
 function dynamic_block_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'bean-dynamic_block-field_dyn_block_video'
+  $field_instances['bean-dynamic_block-field_dyn_block_video'] = array(
+    'bundle' => 'dynamic_block',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(),
+        'type' => 'file_default',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'bean',
+    'field_name' => 'field_dyn_block_video',
+    'label' => 'Video',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'txt',
+      'max_filesize' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 15,
+    ),
+  );
+
   // Exported field_instance: 'bean-dynamic_block-field_dynamic_block_content'
   $field_instances['bean-dynamic_block-field_dynamic_block_content'] = array(
     'bundle' => 'dynamic_block',
@@ -139,50 +175,12 @@ function dynamic_block_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'bean-dynamic_block-field_dynamic_block_video'
-  $field_instances['bean-dynamic_block-field_dynamic_block_video'] = array(
-    'bundle' => 'dynamic_block',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => 'Video Embed field creates a simple field type called Video Embed that allows you to embed videos from YouTube and Vimeo or show their thumbnail previews simply by entering the video\'s url.',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'video_embed_field',
-        'settings' => array(
-          'description' => 1,
-          'description_position' => 'bottom',
-          'video_style' => 'normal',
-        ),
-        'type' => 'video_embed_field',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'bean',
-    'field_name' => 'field_dynamic_block_video',
-    'label' => 'Video',
-    'required' => 0,
-    'settings' => array(
-      'description_field' => 0,
-      'description_length' => 128,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'video_embed_field',
-      'settings' => array(),
-      'type' => 'video_embed_field_video',
-      'weight' => 11,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
   t('Content');
   t('Image');
   t('Links');
   t('Video');
-  t('Video Embed field creates a simple field type called Video Embed that allows you to embed videos from YouTube and Vimeo or show their thumbnail previews simply by entering the video\'s url.');
 
   return $field_instances;
 }
