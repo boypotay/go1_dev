@@ -8,6 +8,17 @@ use Drupal\at_base\Hook\Entity\View_Alter as Entity_View_Alter;
 
 
 
+//Simon test
+
+/**
+ * Implementation of hook_entity_view_alter
+ * Support to alter entity (block, node,...)
+ */
+function go1_dev_entity_view_alter(&$build, $entity_type) {
+  at_id(new Drupal\at_base\Hook\Entity\View_Alter($build, $entity_type))->execute();
+}
+
+
 /**
  * Add a trim function
  */
